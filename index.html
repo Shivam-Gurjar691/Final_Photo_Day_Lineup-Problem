@@ -160,7 +160,7 @@ button{font-family:inherit;cursor:pointer;}
 #confetti-canvas{position:fixed;inset:0;pointer-events:none;z-index:900;}
 footer{text-align:center;padding:20px;color:var(--muted);font-size:12.5px;}
 
-/* ---- section framing (paginated — one section visible at a time) ---- */
+/* ---- section framing (paginated, one section visible at a time) ---- */
 .section{margin:0 0 24px;scroll-margin-top:86px;display:none;}
 .section.active{display:block;animation:fadein .35s;}
 .section:last-of-type{margin-bottom:0;}
@@ -236,43 +236,27 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:12.5px;}
 .algo-idea[open] summary .idea-chevron{transform:rotate(180deg);}
 .algo-idea p{margin:0 0 14px;font-size:13.5px;}
 
-/* ---- reflection ---- */
-.qblock{margin-bottom:20px;}
-.qblock:last-of-type{margin-bottom:0;}
-.qblock label{font-weight:700;display:block;margin-bottom:8px;color:var(--ink);font-size:14.5px;}
-textarea.reflect{
-  width:100%;min-height:64px;border-radius:12px;border:1.5px solid #cfdcf7;padding:12px 14px;
-  font-family:inherit;font-size:14.5px;resize:vertical;background:rgba(255,255,255,0.75);
+/* ---- question cards (Behind the Lens / Contact Sheet) ---- */
+.question-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:22px;
 }
-textarea.reflect:focus{outline:2px solid var(--primary);}
-.reflect-ack{margin-top:8px;font-size:13px;color:var(--primary-dark);font-weight:600;display:none;}
-.reflect-ack.show{display:block;animation:fadein .3s;}
-.reflect-hint{margin-top:8px;font-size:13px;color:#a8551d;font-weight:600;display:none;
-  background:rgba(255,159,90,.14);border:1px solid rgba(255,159,90,.35);border-radius:10px;padding:9px 12px;}
-.reflect-hint.show{display:block;animation:fadein .3s;}
+.question-card{
+  background:var(--glass);border:1px solid var(--glass-border);border-radius:20px;
+  box-shadow:var(--shadow);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  padding:28px 26px 30px;display:flex;flex-direction:column;gap:14px;transition:transform .15s,box-shadow .15s;
+  min-height:150px;justify-content:center;
+}
+.question-card:hover{transform:translateY(-3px);}
+.question-card .q-num{
+  display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;
+  background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;font-weight:800;font-size:15px;
+  flex-shrink:0;
+}
+.question-card .q-text{font-weight:600;font-size:16.5px;line-height:1.5;color:var(--ink);margin:0;}
 
-/* ---- workbook ---- */
-.wb-score{
-  display:flex;justify-content:center;gap:18px;flex-wrap:wrap;font-weight:800;color:var(--primary-deep);
-  background:rgba(255,255,255,.7);border:1px solid var(--glass-border);border-radius:12px;padding:10px 18px;
-  margin-bottom:20px;font-size:13.5px;
+@media(max-width:600px){
+  .question-grid{grid-template-columns:1fr;}
 }
-.wb-question{margin-bottom:22px;}
-.wb-question:last-child{margin-bottom:0;}
-.wb-question .wb-q-text{font-weight:700;margin-bottom:10px;font-size:14.5px;color:var(--ink);}
-.quiz-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;}
-.quiz-options button{
-  background:#fff;border:1.5px solid #cfdcf7;border-radius:12px;padding:11px;font-weight:700;color:var(--ink);
-  transition:.15s;
-}
-.quiz-options button:hover{border-color:var(--primary);}
-.quiz-options button.correct{background:rgba(34,197,94,.18);border-color:var(--green);color:#177a41;}
-.quiz-options button.wrong{background:rgba(239,90,90,.15);border-color:var(--red);color:#a12525;}
-.quiz-options button:disabled{cursor:default;}
-.wb-feedback{margin-top:10px;font-size:13.5px;font-weight:600;color:var(--ink);display:none;}
-.wb-feedback.show{display:block;animation:fadein .3s;}
-
-.continue-hint{text-align:center;font-size:12.5px;color:var(--muted);margin-top:8px;}
 
 @media(max-width:600px){ .wrap{padding:26px 14px 50px;} }
 </style>
@@ -285,12 +269,12 @@ textarea.reflect:focus{outline:2px solid var(--primary);}
   <!-- ================= SECTION 1: THE PROBLEM (generic) ================= -->
   <section class="section" id="sec-problem">
     <div class="hero">
-      <span class="eyebrow">🧩 The Problem</span>
+      <span class="eyebrow">📸 Picture This</span>
 
       <div class="problem-desc-box">
         <h2>🧩 Just Think About It</h2>
         <p>In many real-life situations, people need to arrange a collection of items according to a particular order. For example, organizing products by price, arranging students by height, ordering files by name, or arranging scores from highest to lowest. When the items are not in the desired order, they need to be rearranged through a series of changes.</p>
-        <p>This raises an important question: <strong> How can we systematically rearrange the items into the desired order while making the necessary changes as efficiently as possible? </strong> Solving this problem requires a systematic approach for deciding which items to compare, when to change their positions, and when the desired order has been achieved.</p>
+        <p>This raises an important question: <strong>How can we systematically rearrange the items into the desired order while making the necessary changes as efficiently as possible? </strong> Solving this problem requires a systematic approach for deciding which items to compare, when to change their positions, and when the desired order has been achieved.</p>
         <p class="story-transition">Let's see exactly what that looks like 👇</p>
       </div>
     </div>
@@ -299,9 +283,9 @@ textarea.reflect:focus{outline:2px solid var(--primary);}
   <!-- ================= SECTION 2: INTRODUCTION (the story) ================= -->
   <section class="section" id="sec-intro">
     <div class="hero">
-      <span class="eyebrow">🎬 Chapter 1 · Introduction</span>
+      <span class="eyebrow">🎬 Chapter 1 · Picture Day</span>
       <h1>📸 Photo Day Line-Up</h1>
-      <p>Seven students must line up shortest to tallest before the photographer loses patience. The playground is packed — a student may only swap places with the neighbour right beside them.</p>
+      <p>Seven students must line up shortest to tallest before the photographer loses patience. The playground is packed, so a student may only swap places with the neighbour right beside them.</p>
       <div class="rule-chip">🚧 Rule: only neighbouring students can swap</div>
     </div>
   </section>
@@ -311,7 +295,7 @@ textarea.reflect:focus{outline:2px solid var(--primary);}
     <div style="text-align:center;margin-bottom:8px;">
       <span class="tax-tag" style="font-size:12px;padding:4px 14px;">📌 Case Study</span>
     </div>
-    <span class="eyebrow" style="display:block;text-align:center;margin:0 auto 6px;width:fit-content;">🎮 Chapter 2 · The Game</span>
+    <span class="eyebrow" style="display:block;text-align:center;margin:0 auto 6px;width:fit-content;">🎮 Chapter 2 · Line It Up</span>
     <h2 class="section-title">Sort the Line-Up</h2>
 
    
@@ -328,7 +312,7 @@ textarea.reflect:focus{outline:2px solid var(--primary);}
   box-shadow: 0 3px 10px rgba(0, 120, 160, 0.08);
 ">
   💡 <b style="color: #000b0c;">NOTE:</b>
-  — <b style="color: #087f8c;">Use the Forward button to step through one comparison at a time, or hit Auto Play and watch the line sort itself, pass by pass.</b>
+  <b style="color: #087f8c;">Use the Forward button to step through one comparison at a time, or hit Auto Play and watch the line sort itself, pass by pass.</b>
   <br>
   <b><span style="color: #0535f7;">Try Auto Play first!</b></span>
 </div>
@@ -388,56 +372,24 @@ textarea.reflect:focus{outline:2px solid var(--primary);}
   </div>
   </section>
 
-  <!-- ================= SECTION 3: REFLECTION CORNER ================= -->
+  <!-- ================= SECTION 3: BEHIND THE LENS (reflection) ================= -->
   <section class="section" id="sec-reflect">
-    <span class="eyebrow" style="display:block;text-align:center;margin:0 auto 6px;width:fit-content;">💭 Chapter 3 · Reflection Corner</span>
+    <span class="eyebrow" style="display:block;text-align:center;margin:0 auto 6px;width:fit-content;">💭 Chapter 3 · Behind the Lens</span>
     <h2 class="section-title">What did you notice?</h2>
-    <p class="section-sub">There's no single "correct" wording — just write what you noticed or think, in your own words.</p>
-      <div class="card">
-        <div class="qblock">
-          
-          <label>1. What did you do when two neighbouring elements were not in the order you wanted?</label>
-          <textarea class="reflect" id="rf1" placeholder="Type what you remember…"></textarea>
-          <div class="reflect-hint" id="rf1-hint"></div>
-        </div>
-        <div class="qblock">
-          
-          <label>2. After moving through all the elements once, what change did you notice? Was any element now in its correct position?</label>
-          <textarea class="reflect" id="rf2" placeholder="Type what you noticed…"></textarea>
-          <div class="reflect-hint" id="rf2-hint"></div>
-        </div>
-        <div class="qblock">
-         
-          <label>3. Why did you need to repeat the same process several times?</label>
-          <textarea class="reflect" id="rf3" placeholder="Type your idea…"></textarea>
-          <div class="reflect-hint" id="rf3-hint"></div>
-        </div>
-        <div class="qblock">
-
-           <label>4. How did the number of comparisons change as you repeated the process? Why?</label>
-          <textarea class="reflect" id="rf4" placeholder="Type your idea…"></textarea>
-          <div class="reflect-hint" id="rf4-hint"></div>
-        </div>
-        <div class="qblock">
-        
-          <label>5. Suppose you completed one full round without making any changes. What could you conclude about the elements?</label>
-          <textarea class="reflect" id="rf5" placeholder="Type your idea…"></textarea>
-          <div class="reflect-hint" id="rf5-hint"></div>
-        </div>
-        <p class="continue-hint" id="reflect-continue-hint">Take your time — Write down whatever you noticed, even if it's rough.</p>
-      </div>
+    <p class="section-sub">Before the photographer moves on, a few things worth thinking about. No need to write anything down.</p>
+    <div class="question-grid" id="reflect-grid"></div>
   </section>
 
   <!-- ================= SECTION 4: ALGORITHM EXPLANATION ================= -->
   <section class="section" id="sec-algorithm">
-    <span class="eyebrow" style="display:block;text-align:center;margin:0 auto 6px;width:fit-content;">📚 Chapter 4 · Meet the Algorithm</span>
+    <span class="eyebrow" style="display:block;text-align:center;margin:0 auto 6px;width:fit-content;">📚 Chapter 4 · The Photographer's Method</span>
     <h2 class="section-title">So... What Were We Actually Doing?</h2>
     <p class="section-sub">Everything you just did in the game has a name. Here's the algorithm behind it.</p>
     <div class="card algo-card">
       <h3>🫧 It's called Bubble Sort</h3>
-      <p>It's called <b>Bubble Sort</b> because, pass after pass, the largest remaining value keeps "bubbling up" toward the end of the line — one comparison, one possible swap, at a time — just like a bubble rising to the surface of water.</p>
+      <p>It's called <b>Bubble Sort</b> because, pass after pass, the largest remaining value keeps "bubbling up" toward the end of the line, one comparison and one possible swap at a time, just like a bubble rising to the surface of water.</p>
 
-      <h4>Try it yourself — step through the logic</h4>
+      <h4>Try it yourself: step through the logic</h4>
       <p style="margin-bottom:14px;">This is the exact same idea as the game, shrunk down to five numbers. Use the Forward button to step through it or hit play and watch the pseudocode light up in sync with what's happening below.</p>
 
       <div class="algo-demo">
@@ -460,7 +412,7 @@ textarea.reflect:focus{outline:2px solid var(--primary);}
       <div class="algo-idea-grid">
         <details class="algo-idea" open>
           <summary><span class="idea-icon">🔍</span> Compare neighbours <span class="idea-chevron">▾</span></summary>
-          <p>Only two students standing right next to each other are ever compared — never elements that are far apart in the line.</p>
+          <p>Only two students standing right next to each other are ever compared, never elements that are far apart in the line.</p>
         </details>
         <details class="algo-idea">
           <summary><span class="idea-icon">🔄</span> Swap only when needed <span class="idea-chevron">▾</span></summary>
@@ -472,24 +424,18 @@ textarea.reflect:focus{outline:2px solid var(--primary);}
         </details>
         <details class="algo-idea">
           <summary><span class="idea-icon">✅</span> Stop when nothing changes <span class="idea-chevron">▾</span></summary>
-          <p>If an entire pass goes by with zero swaps, every element must already be in order — so the algorithm can stop early.</p>
+          <p>If an entire pass goes by with zero swaps, every element must already be in order, so the algorithm can stop early.</p>
         </details>
       </div>
     </div>
   </section>
 
-  <!-- ================= SECTION 5: EXERCISE WORKBOOK ================= -->
+  <!-- ================= SECTION 5: CONTACT SHEET (exercises) ================= -->
   <section class="section" id="sec-workbook">
-    <span class="eyebrow" style="display:block;text-align:center;margin:0 auto 6px;width:fit-content;">📝 Chapter 5 · Exercise Workbook</span>
+    <span class="eyebrow" style="display:block;text-align:center;margin:0 auto 6px;width:fit-content;">📝 Chapter 5 · Contact Sheet</span>
     <h2 class="section-title">Go Deeper</h2>
-    <p class="section-sub">These are open-ended — write your own reasoning.</p>
-      <div class="card">
-        <div class="wb-score">
-          <span>✅ Answered: <span id="wb-score">0</span>/9</span>
-        </div>
-        <div id="wb-questions"></div>
-        <p class="continue-hint" id="wb-continue-hint">Take your time working through these — some are quick, some need more thought.</p>
-      </div>
+    <p class="section-sub">A proof sheet of harder questions to think through. Open-ended, no single right answer.</p>
+    <div class="question-grid" id="wb-questions"></div>
   </section>
 
   <div class="bottom-nav" id="bottom-nav">
@@ -508,7 +454,7 @@ textarea.reflect:focus{outline:2px solid var(--primary);}
 
 /* ---------------- section pagination state (declared early: render() below references it) ---------------- */
 const SECTION_ORDER = ["sec-problem","sec-intro","sec-game","sec-reflect","sec-algorithm","sec-workbook"];
-const SECTION_NAMES = ["The Problem","Introduction","The Game","Reflection","The Algorithm","Exercises"];
+const SECTION_NAMES = ["Picture This","Picture Day","Line It Up","Behind the Lens","The Photographer's Method","Contact Sheet"];
 let currentSection = 0;
 
 /* ---------------- data ---------------- */
@@ -615,8 +561,8 @@ let wasPlayingWhenAsked = false;
 let pqCorrectNeedsSwap = true;
 
 // Pick a specific COMPARISON step (not the very first one, so there's already
-// some context on screen) to pause on and ask about that exact pair by name —
-// e.g. "Do we need to swap Ram and Shyam?" — instead of a vague progress check.
+// some context on screen) to pause on and ask about that exact pair by name,
+// e.g. "Do we need to swap Ram and Shyam?", instead of a vague progress check.
 // Returns null when there simply aren't enough comparisons to pick from.
 function pickRandomQuestionStep(steps){
   const compareIdxs = [];
@@ -698,10 +644,10 @@ function render(){
 
   if(!st) statusEl.textContent = "";
   else if(st.type==="compare") statusEl.textContent = `Comparing ${state[st.i].name} and ${state[st.j].name}…`;
-  else if(st.type==="swap") statusEl.textContent = `${state[st.j].name} was taller — swapping with ${state[st.i].name}!`;
+  else if(st.type==="swap") statusEl.textContent = `${state[st.j].name} was taller, swapping with ${state[st.i].name}!`;
   else if(st.type==="keep") statusEl.textContent = `${state[st.i].name} and ${state[st.j].name} are already in order.`;
-  else if(st.type==="passend") statusEl.textContent = `Pass ${st.pass+1} done — ${state[st.boundary] ? state[st.boundary].name : ""} reached its spot! 🎉`;
-  else if(st.type==="earlystop") statusEl.textContent = `No swaps needed this pass — everyone's in order! ✅`;
+  else if(st.type==="passend") statusEl.textContent = `Pass ${st.pass+1} done, ${state[st.boundary] ? state[st.boundary].name : ""} reached its spot! 🎉`;
+  else if(st.type==="earlystop") statusEl.textContent = `No swaps needed this pass, everyone's in order! ✅`;
   else if(st.type==="done") statusEl.textContent = `All done! Every student is lined up correctly. 🎉`;
 
   // Randomly pause at one specific comparison and ask about that exact pair.
@@ -732,99 +678,47 @@ function render(){
   if(typeof updateNavUI === "function") updateNavUI();
 }
 
-/* ---------------- Reflection Corner ---------------- */
-// Each reflection question is tagged with the Bloom's Taxonomy tier it
-// targets (see the <span class="tax-tag"> labels in the markup) — Remember,
-// Understand, Analyze, and Evaluate — which is the taxonomy that best fits
-// a hands-on "watch it, then reason about it" story like this one.
-// The "short" reference answer is NOT shown inline under each question —
-// it only appears in the consolidated summary once all 4 are answered.
+/* ---------------- Behind the Lens (reflection) ---------------- */
+// Each prompt is tagged with the Bloom's Taxonomy tier it targets:
+// Remember, Understand, Analyze, and Evaluate, which is the taxonomy that
+// best fits a hands-on "watch it, then reason about it" story like this
+// one. These are shown as read-only prompt cards: we are not collecting
+// student answers, so there is nothing to type or submit here.
 const REFLECT_CONFIG = [
-  { id:"rf1", question:"What did you do when two neighbouring elements were not in the order you wanted?" },
-  { id:"rf2", question:"After moving through all the elements once, what change did you notice? Was any element now in its correct position?" },
-  { id:"rf3", question:"Why did you need to repeat the same process several times?" },
-  { id:"rf4", question:"How did the number of comparisons change as you repeated the process? Why?" },
-  { id:"rf5", question:"Suppose you completed one full round without making any changes. What could you conclude about the elements?" }
+  { question:"What did you do when two neighbouring elements were not in the order you wanted?" },
+  { question:"After moving through all the elements once, what change did you notice? Was any element now in its correct position?" },
+  { question:"Why did you need to repeat the same process several times?" },
+  { question:"How did the number of comparisons change as you repeated the process? Why?" },
+  { question:"Suppose you completed one full round without making any changes. What could you conclude about the elements?" }
 ];
-const REFLECT_IDS = REFLECT_CONFIG.map(c=>c.id);
 
-// Zero-friction on purpose: these are reflection prompts, not a quiz. There
-// is no "correct" wording, so the only requirement is that the student has
-// typed *something* — even a rough, unpolished thought counts as answered.
-// Once all four are filled in, a structured summary — each question, the
-// student's own answer, and the reference answer — is shown at the end.
-function isReflectAnswerValid(text){
-  return text.trim().length > 0;
-}
-function reflectComplete(){
-  return REFLECT_CONFIG.every(cfg => isReflectAnswerValid(document.getElementById(cfg.id).value));
-}
-function checkReflectAnswer(cfg){
-  document.getElementById("reflect-continue-hint").style.display = reflectComplete() ? "none" : "block";
-  if(typeof updateNavUI === "function") updateNavUI();
-}
-function wireReflection(){
-  REFLECT_CONFIG.forEach(cfg=>{
-    const ta = document.getElementById(cfg.id);
-    ta.addEventListener("input", ()=> checkReflectAnswer(cfg));
-    ta.addEventListener("blur", ()=> checkReflectAnswer(cfg));
-  });
-}
-
-/* ---------------- Exercise Workbook ---------------- */
-// These are open-ended, go-deeper questions — not a multiple-choice quiz.
-// Just like the Reflection Corner, there's no "correct" wording checked;
-// the only requirement is that the student has written something. Once
-// all five are answered, a structured summary (question, the student's
-// own answer, and the reference answer) is shown, and a small completion
-// popup celebrates finishing the whole workbook.
-const WORKBOOK_CONFIG = [
-  { id:"wb1", question:"Seven students are standing in a line in random order of height. You may compare only two students standing next to each other and swap their positions. Design a procedure to arrange them from shortest to tallest. Explain why it works." },
-  { id:"wb2", question:"Sort the following array using Bubble Sort in ascending order: [42, 17, 35, 8, 29, 14] Show the array after each pass and explain what happens in each pass as if you were teaching a beginner." },
-  { id:"wb3", question:"What would happen if Bubble Sort compared elements from right to left instead of left to right? Would it still sort the array correctly? Explain your answer." },
-  { id:"wb4", question:"You have 100 numbers, but you do not need to sort them. You only need to find the largest number. Can the central idea behind one pass of Bubble Sort solve this? Explain." },
-  { id:"wb5", question:"A system needs to sort 100,000 values repeatedly. Would Bubble Sort be a suitable choice? Explain your decision based on how Bubble Sort works and what you would expect to happen when handling such a large collection." },
-  { id:"wb6", question:"If you could improve one part of Bubble Sort without changing its basic idea, what would you change? Explain why." },
-  { id:"wb7", question:"After one pass of Bubble Sort, the array becomes: [12, 25, 8, 17, 31, 42] What will the array look like after the next complete pass? Explain your answer." },
-  { id:"wb8", question:"Consider 10, 20, 30, 50, 40, 60, 70. Without performing the complete algorithm, predict how Bubble Sort will behave on this input. How could you avoid unnecessary work?" },
-  { id:"wb9", question:"You learned Bubble Sort for ascending order. Without looking up another version, explain what you would change to sort 12, 5, 19, 8, 3 in descending order." }
-];
-const WORKBOOK_IDS = WORKBOOK_CONFIG.map(c=>c.id);
-
-function buildWorkbookQuestions(){
-  const wrapEl = document.getElementById("wb-questions");
+function buildQuestionCards(containerId, config){
+  const wrapEl = document.getElementById(containerId);
   wrapEl.innerHTML = "";
-  WORKBOOK_CONFIG.forEach((cfg,i)=>{
-    const block = document.createElement("div");
-    block.className = "qblock";
-    block.innerHTML = `
-      <label>${i+1}. ${cfg.question}</label>
-      <textarea class="reflect" id="${cfg.id}" placeholder="Type your reasoning…"></textarea>`;
-    wrapEl.appendChild(block);
+  config.forEach((cfg,i)=>{
+    const card = document.createElement("div");
+    card.className = "question-card";
+    card.innerHTML = `<span class="q-num">${i+1}</span><p class="q-text">${cfg.question}</p>`;
+    wrapEl.appendChild(card);
   });
 }
-function isWorkbookAnswerValid(text){
-  return text.trim().length > 0;
-}
-function workbookAnsweredCount(){
-  return WORKBOOK_CONFIG.filter(cfg => isWorkbookAnswerValid(document.getElementById(cfg.id).value)).length;
-}
-function workbookComplete(){
-  return workbookAnsweredCount() === WORKBOOK_CONFIG.length;
-}
-function checkWorkbookAnswer(){
-  document.getElementById("wb-score").textContent = workbookAnsweredCount();
-  document.getElementById("wb-continue-hint").style.display = workbookComplete() ? "none" : "block";
-  if(typeof updateNavUI === "function") updateNavUI();
-}
-function wireWorkbook(){
-  WORKBOOK_CONFIG.forEach(cfg=>{
-    const ta = document.getElementById(cfg.id);
-    ta.addEventListener("input", checkWorkbookAnswer);
-    ta.addEventListener("blur", checkWorkbookAnswer);
-  });
-}
-wireReflection();
+buildQuestionCards("reflect-grid", REFLECT_CONFIG);
+
+/* ---------------- Contact Sheet (exercises) ---------------- */
+// Open-ended, go-deeper questions shown as a proof-sheet style grid of
+// cards. Same as Behind the Lens: no answers are collected, so these are
+// prompt cards only, not input fields.
+const WORKBOOK_CONFIG = [
+  { question:"Seven students are standing in a line in random order of height. You may compare only two students standing next to each other and swap their positions. Design a procedure to arrange them from shortest to tallest. Explain why it works." },
+  { question:"Sort the following array using Bubble Sort in ascending order: [42, 17, 35, 8, 29, 14] Show the array after each pass and explain what happens in each pass as if you were teaching a beginner." },
+  { question:"What would happen if Bubble Sort compared elements from right to left instead of left to right? Would it still sort the array correctly? Explain your answer." },
+  { question:"You have 100 numbers, but you do not need to sort them. You only need to find the largest number. Can the central idea behind one pass of Bubble Sort solve this? Explain." },
+  { question:"A system needs to sort 100,000 values repeatedly. Would Bubble Sort be a suitable choice? Explain your decision based on how Bubble Sort works and what you would expect to happen when handling such a large collection." },
+  { question:"If you could improve one part of Bubble Sort without changing its basic idea, what would you change? Explain why." },
+  { question:"After one pass of Bubble Sort, the array becomes: [12, 25, 8, 17, 31, 42] What will the array look like after the next complete pass? Explain your answer." },
+  { question:"Consider 10, 20, 30, 50, 40, 60, 70. Without performing the complete algorithm, predict how Bubble Sort will behave on this input. How could you avoid unnecessary work?" },
+  { question:"You learned Bubble Sort for ascending order. Without looking up another version, explain what you would change to sort 12, 5, 19, 8, 3 in descending order." }
+];
 
 function triggerPassQuestion(state, st){
   pendingQuestion = true;
@@ -833,7 +727,7 @@ function triggerPassQuestion(state, st){
   const nameA = state[st.i].name, nameB = state[st.j].name;
   pqCorrectNeedsSwap = state[st.i].height > state[st.j].height;
   document.getElementById("pq-text").textContent =
-    `🤔 Take a look — do we need to swap ${nameA} and ${nameB}?`;
+    `🤔 Take a look: do we need to swap ${nameA} and ${nameB}?`;
   document.getElementById("pass-question").classList.add("show");
   setTimeout(()=> document.getElementById("pass-question").scrollIntoView({behavior:"smooth", block:"center"}), 50);
 }
@@ -852,10 +746,10 @@ function answerPassQuestion(userSaidYes){
   fb.textContent = correct
     ? (userCorrect
         ? `✅ Correct! ${nameA} is taller than ${nameB}, so they need to swap places.`
-        : `Not quite — ${nameA} is actually taller than ${nameB} here, so they do need to swap.`)
+        : `Not quite. ${nameA} is actually taller than ${nameB} here, so they do need to swap.`)
     : (userCorrect
         ? `✅ Correct! ${nameA} isn't taller than ${nameB}, so no swap is needed here.`
-        : `Not quite — ${nameA} isn't taller than ${nameB} here, so no swap is needed.`);
+        : `Not quite. ${nameA} isn't taller than ${nameB} here, so no swap is needed.`);
   fb.classList.add("show");
   document.getElementById("pq-continue").style.display = "inline-flex";
 }
@@ -933,8 +827,7 @@ document.getElementById("pq-continue").addEventListener("click", closePassQuesti
 
 buildChips();
 render();
-buildWorkbookQuestions();
-wireWorkbook();
+buildQuestionCards("wb-questions", WORKBOOK_CONFIG);
 
 /* ---------------- Meet the Algorithm: mini interactive bubble-sort demo ---------------- */
 (function(){
@@ -1024,14 +917,14 @@ wireWorkbook();
       barsEl.appendChild(el);
     });
 
-    const passNum = st && st.pass!==undefined ? st.pass+1 : (st && st.type==="done" ? "—" : 1);
+    const passNum = st && st.pass!==undefined ? st.pass+1 : (st && st.type==="done" ? "-" : 1);
     passLabelEl.textContent = st && st.type==="done" ? "Sorted! 🎉" : `Pass ${passNum}`;
 
-    if(!st){ statusEl.textContent = "Ready — press ▶ or step forward to begin."; highlightLine("outer"); }
+    if(!st){ statusEl.textContent = "Ready. Press ▶ or step forward to begin."; highlightLine("outer"); }
     else if(st.type==="compare"){ statusEl.textContent = `Comparing A[${st.j}]=${state[st.j]} and A[${st.i}]=${state[st.i]}…`; highlightLine("if"); }
-    else if(st.type==="swap"){ statusEl.textContent = `${state[st.j]} > ${state[st.i]} — swapping!`; highlightLine("swap","active-swap"); }
-    else if(st.type==="keep"){ statusEl.textContent = `Already in order — no swap, move on.`; highlightLine("inner"); }
-    else if(st.type==="passend"){ statusEl.textContent = `Pass ${st.pass+1} done — next value locked in place.`; highlightLine("outer"); }
+    else if(st.type==="swap"){ statusEl.textContent = `${state[st.j]} > ${state[st.i]}, swapping!`; highlightLine("swap","active-swap"); }
+    else if(st.type==="keep"){ statusEl.textContent = `Already in order, no swap, move on.`; highlightLine("inner"); }
+    else if(st.type==="passend"){ statusEl.textContent = `Pass ${st.pass+1} done, next value locked in place.`; highlightLine("outer"); }
     else if(st.type==="done"){ statusEl.textContent = `All sorted, smallest to largest! 🎉`; highlightLine(null); }
 
     progressEl.innerHTML = "";
@@ -1070,11 +963,11 @@ wireWorkbook();
   drender();
 })();
 
-/* ---------------- section pagination (Back / Continue only — no jumping) ---------------- */
+/* ---------------- section pagination (Back / Continue only, no jumping) ---------------- */
 // A section is "done" before you're allowed to continue past it. Only the
-// Game requires an actual completed action (finishing the sort); Reflection
-// and the Exercise Workbook are open-ended and left entirely up to the user
-// to decide when to move on.
+// Game requires an actual completed action (finishing the sort); Behind the
+// Lens and the Contact Sheet are read-only prompt cards with no answers to
+// collect, so the user can move through them freely.
 function isCurrentSectionComplete(){
   switch(SECTION_ORDER[currentSection]){
     case "sec-game": return sortedOnce;
@@ -1085,7 +978,7 @@ function lockHintFor(){
   return "";
 }
 
-// Refreshes button/label state for the current section WITHOUT scrolling —
+// Refreshes button/label state for the current section WITHOUT scrolling.
 // call this any time completion status may have changed (typing an answer,
 // finishing a sort, etc.) while the user stays on the same section.
 function updateNavUI(){
